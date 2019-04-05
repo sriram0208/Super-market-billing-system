@@ -1,0 +1,15 @@
+﻿@model SupermarketWebAPIBilling.Models.supermarketDBEntities2
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@foreach (var item in Model.StaffLoginTbs) {
+
+    <tr>
+
+        <td>@item.StaffName</td>
+
+        </tr>
+}

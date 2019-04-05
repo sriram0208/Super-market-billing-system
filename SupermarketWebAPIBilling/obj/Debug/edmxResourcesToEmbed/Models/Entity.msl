@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="supermarketDBModelStoreContainer" CdmEntityContainer="supermarketDBEntities2">
+    <EntitySetMapping Name="BilledProductsTbs">
+      <EntityTypeMapping TypeName="supermarketDBModel.BilledProductsTb">
+        <MappingFragment StoreEntitySet="BilledProductsTb">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BillId" ColumnName="BillId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BillingTables">
+      <EntityTypeMapping TypeName="supermarketDBModel.BillingTable">
+        <MappingFragment StoreEntitySet="BillingTable">
+          <ScalarProperty Name="BillId" ColumnName="BillId" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerTbs">
+      <EntityTypeMapping TypeName="supermarketDBModel.CustomerTb">
+        <MappingFragment StoreEntitySet="CustomerTb">
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="Points" ColumnName="Points" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductTbs">
+      <EntityTypeMapping TypeName="supermarketDBModel.ProductTb">
+        <MappingFragment StoreEntitySet="ProductTb">
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="DateOfManufacture" ColumnName="DateOfManufacture" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StaffLoginTbs">
+      <EntityTypeMapping TypeName="supermarketDBModel.StaffLoginTb">
+        <MappingFragment StoreEntitySet="StaffLoginTb">
+          <ScalarProperty Name="StaffId" ColumnName="StaffId" />
+          <ScalarProperty Name="StaffName" ColumnName="StaffName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

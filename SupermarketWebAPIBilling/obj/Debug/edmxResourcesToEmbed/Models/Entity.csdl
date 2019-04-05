@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="supermarketDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BilledProductsTb">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BillId" Type="Int32" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="Quantity" Type="Int32" />
+    <NavigationProperty Name="BillingTable" Relationship="Self.FK_BilledProductsTb_BillingId" FromRole="BilledProductsTb" ToRole="BillingTable" />
+    <NavigationProperty Name="ProductTb" Relationship="Self.FK_BilledProductsTb_ProductId" FromRole="BilledProductsTb" ToRole="ProductTb" />
+  </EntityType>
+  <EntityType Name="BillingTable">
+    <Key>
+      <PropertyRef Name="BillId" />
+    </Key>
+    <Property Name="BillId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Amount" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="BilledProductsTbs" Relationship="Self.FK_BilledProductsTb_BillingId" FromRole="BillingTable" ToRole="BilledProductsTb" />
+    <NavigationProperty Name="CustomerTb" Relationship="Self.FK_BillingTable_CustomerId" FromRole="BillingTable" ToRole="CustomerTb" />
+  </EntityType>
+  <EntityType Name="CustomerTb">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CustomerName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Points" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BillingTables" Relationship="Self.FK_BillingTable_CustomerId" FromRole="CustomerTb" ToRole="BillingTable" />
+  </EntityType>
+  <EntityType Name="ProductTb">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Category" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateOfManufacture" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BilledProductsTbs" Relationship="Self.FK_BilledProductsTb_ProductId" FromRole="ProductTb" ToRole="BilledProductsTb" />
+  </EntityType>
+  <EntityType Name="StaffLoginTb">
+    <Key>
+      <PropertyRef Name="StaffId" />
+    </Key>
+    <Property Name="StaffId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StaffName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_BilledProductsTb_BillingId">
+    <End Role="BillingTable" Type="Self.BillingTable" Multiplicity="0..1" />
+    <End Role="BilledProductsTb" Type="Self.BilledProductsTb" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BillingTable">
+        <PropertyRef Name="BillId" />
+      </Principal>
+      <Dependent Role="BilledProductsTb">
+        <PropertyRef Name="BillId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BilledProductsTb_ProductId">
+    <End Role="ProductTb" Type="Self.ProductTb" Multiplicity="0..1" />
+    <End Role="BilledProductsTb" Type="Self.BilledProductsTb" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductTb">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="BilledProductsTb">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BillingTable_CustomerId">
+    <End Role="CustomerTb" Type="Self.CustomerTb" Multiplicity="0..1" />
+    <End Role="BillingTable" Type="Self.BillingTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerTb">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="BillingTable">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="supermarketDBEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BilledProductsTbs" EntityType="Self.BilledProductsTb" />
+    <EntitySet Name="BillingTables" EntityType="Self.BillingTable" />
+    <EntitySet Name="CustomerTbs" EntityType="Self.CustomerTb" />
+    <EntitySet Name="ProductTbs" EntityType="Self.ProductTb" />
+    <EntitySet Name="StaffLoginTbs" EntityType="Self.StaffLoginTb" />
+    <AssociationSet Name="FK_BilledProductsTb_BillingId" Association="Self.FK_BilledProductsTb_BillingId">
+      <End Role="BillingTable" EntitySet="BillingTables" />
+      <End Role="BilledProductsTb" EntitySet="BilledProductsTbs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BilledProductsTb_ProductId" Association="Self.FK_BilledProductsTb_ProductId">
+      <End Role="ProductTb" EntitySet="ProductTbs" />
+      <End Role="BilledProductsTb" EntitySet="BilledProductsTbs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillingTable_CustomerId" Association="Self.FK_BillingTable_CustomerId">
+      <End Role="CustomerTb" EntitySet="CustomerTbs" />
+      <End Role="BillingTable" EntitySet="BillingTables" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
