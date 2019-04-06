@@ -50,27 +50,66 @@ namespace SuperMarketBillingUI.Controllers
             else
                 return View("StaffLogin/StaffLogin");//same page with alert
         }
-
+        public ActionResult CustomerRegister(string CustomerId,String CustomerName)
+        {
+            //string CustomerId = Request["CustomerId"];
+            DateTime date=DateTime.Now;
+            //date.ToShortDateString();
+            var custobj = new Dictionary<string, string>()
+            {
+                {"CustomerId",CustomerId },
+                {"CustomerName",CustomerName },
+                {"Points","0" }
+            };
+            HttpClient client2 = new HttpClient();
+            string url2 = "http://localhost:52903/api/CustomerTbs";
+            var content2 = new FormUrlEncodedContent(custobj);
+            var response2 = client2.PostAsync(url2, content2);
+            var obj = new Dictionary<string, string>()
+            {
+                {"CustomerId",CustomerId },
+                {"Amount","0" },
+                {"Date",date.ToString() }
+               
+            };
+            HttpClient client = new HttpClient();
+            string url = "http://localhost:52903/api/BillingTables";
+            var content = new FormUrlEncodedContent(obj);
+            var response = client.PostAsync(url, content);
+             string op = "";
+            Models.BillingTable ret;
+            using (HttpContent cont = response.Result.Content)
+            {
+                Task<string> res = cont.ReadAsStringAsync();
+                op = res.Result;
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                //product = js.Deserialize<Models.ProductTb>(op);
+                ret = js.Deserialize<Models.BillingTable>(op);
+            }
+            Session["BillId"] = ret.BillId;
+            return View("Billing");
+        }
         public ActionResult Billing()
-        { 
-            return View();
+        {
+           return View();
         }
 
-        public ActionResult BilledProductsView(int ProductId)
+        public ActionResult BilledProductsView(Models.ProductTb obj)
         {
-        ////    var obj2 = new Dictionary<string, string>()
-        ////{
-        ////    { "ProductId",obj.ProductId.ToString()},
+            var obj3 = new Dictionary<string, string>()
+            {
+                
+                { "ProductId",obj.ProductId.ToString()},
 
-        ////        {"Quantity",obj.Quantity.ToString() }
+                    {"Quantity",obj.Quantity.ToString() }
 
-        ////};
-            //SuperMarketBillingUI.Models.BilledProductsTb obj = new SuperMarketBillingUI.Models.BilledProductsTb();
+            };
             HttpClient client = new HttpClient();
-            string url = "http://localhost:52903/api/ProductTbs/1";
-          // var content = new FormUrlEncodedContent(obj2);
+            string url = "http://localhost:52903/api/ProductTbs/"+obj.ProductId;
+          // var content = new FormUrlEncodedContent(obj3);
             var response = client.GetAsync(url);
-            String op = "";
+
+            string op = "";
             Models.ProductTb ret;
             using (HttpContent cont = response.Result.Content)
             {
@@ -80,7 +119,23 @@ namespace SuperMarketBillingUI.Controllers
                 //product = js.Deserialize<Models.ProductTb>(op);
                 ret = js.Deserialize<Models.ProductTb>(op);
             }
-            return View(ret);
+            ViewBag.ProductId = ret.ProductId;
+            ViewBag.ProductName = ret.ProductName;
+            ViewBag.Price = ret.Price;
+            var obj2 = new Dictionary<string, string>()
+            {
+                {"BillId",Session["BillId"].ToString() },
+                { "ProductId",obj.ProductId.ToString()},
+
+                    {"Quantity",obj.Quantity.ToString() }
+
+            };
+            HttpClient client2 = new HttpClient();
+            string url2 = "http://localhost:52903/api/BilledProductsTbs";
+            var content2 = new FormUrlEncodedContent(obj2);
+            var response2 = client.PostAsync(url2, content2);
+
+            return View("Billing");
         }
     }
 }

@@ -163,7 +163,6 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\ProductTbController.cs" />
     <Compile Include="Controllers\StaffLoginController.cs" />
     <Compile Include="Global.asax.cs">

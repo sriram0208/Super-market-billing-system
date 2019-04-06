@@ -24,18 +24,19 @@ namespace SupermarketWebAPIBilling.Controllers
 
         // GET: api/ProductTbs/5
         [ResponseType(typeof(ProductTb))]
-        public ProductTb GetProductTb(int id)
+        public IHttpActionResult GetProductTb(int id)
         {
-            ProductTb productTb = db.ProductTbs.Find(id);
-            if (productTb == null)
+           // return PostProductTb(productTb);
+            ProductTb product = db.ProductTbs.Find(id);
+            if (product == null)
             {
-                return null;
-                //return false;
-                //return NotFound();
+                //return null;
+                ////return false;
+                return NotFound();
             }
-            return productTb;
+            //return product;
             //return true;
-            //  return Ok(productTb);
+              return Ok(product);
         }
 
         // PUT: api/ProductTbs/5

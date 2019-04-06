@@ -168,6 +168,9 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BilledProductsTbsController.cs" />
+    <Compile Include="Controllers\BillingTablesController.cs" />
+    <Compile Include="Controllers\CustomerTbsController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ProductTbsController.cs" />
     <Compile Include="Controllers\StaffLoginTbsController.cs" />
